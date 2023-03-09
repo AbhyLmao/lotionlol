@@ -1,27 +1,76 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "./Sidebar";
 
 function Show(props) {
   const navigate = useNavigate();
-  console.log(props);
+  //
+  //
+  const [loading, setLoading] = useState(true);
+  const [taskTitle, setTaskTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  //
+  //
+  console.log(props, "Properties of n");
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (localStorage.getItem("test") != null) {
+    }
+  }, []);
+  useEffect(() => {
+    var target = props.tasks.find((task) => task.id == id);
+    console.log({ target });
+    if (target != undefined) {
+      setTaskTitle(target.title);
+      setDesc(target.description);
+      setLoading(false);
+    }
+  }, [taskTitle, desc, loading, props.tasks, id]);
+  function DeleteTask() {
+    props.changeTask(props.tasks.filter((task) => task.id != id));
+    localStorage.setItem(
+      "test",
+      JSON.stringify(props.tasks.filter((task) => task.id != id))
+    );
+    navigate("/");
+  }
+
+  console.log(props, "Props");
+
   return (
     <div className="flex w-screen">
-      <Sidebar tasks={props.tasks} changeTask={props.changeTask} />
+      <Sidebar
+        tasks={props.tasks}
+        changeTitle={props.changeTitle}
+        changeDesc={props.targetDesc}
+        changeTask={props.changeTask}
+      />
 
       <div className="w-[100%]">
         <div className="flex justify-between">
           <div>
             <div className="flex-col">
-              <div>title</div>
+              <div className="font-bold">
+                <div
+                  className="content"
+                  dangerouslySetInnerHTML={{
+                    __html: taskTitle,
+                  }}
+                ></div>
+              </div>
               <div>date</div>
             </div>
           </div>
           <div className="flex gap-10">
             <button onClick={() => navigate("edit")}>Edit</button>
-            <button>delete</button>
+            <button onClick={DeleteTask}>delete</button>
           </div>
         </div>
+        <div
+          className="content"
+          dangerouslySetInnerHTML={{ __html: desc }}
+        ></div>
       </div>
     </div>
   );

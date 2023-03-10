@@ -16,24 +16,24 @@ function Sidebar(props) {
     //
     props.changeTask([
       ...props.tasks,
-      { title: "Untitled", description: "", id: id, createdAt: Date.now() },
+      { title: "Untitled", description: "", id: id, createdAt: ""  },
     ]);
 
     localStorage.setItem(
       "test",
       JSON.stringify([
         ...props.tasks,
-        { title: "Untitled", description: "", id: id, createdAt: Date.now() },
+        { title: "Untitled", description: "", id: id, createdAt: "" () },
       ])
     );
 
     navigate(`/${id}/edit`);
   }
   return (
-    <div className="h-screen overflow-scroll w-[450px] bg-slate-300 flex flex-col">
-      <div className="flex justify-between border-2 p-4">
-        <h1 className="text-4xl font-slate-900 font-bold">Note</h1>
-        <button className="font-bold text-4xl" onClick={addAndNavigateToTask}>
+    <div className="h-screen overflow-scroll w-[450px] bg-[#c29aff] flex flex-col">
+      <div className="flex justify-between border-b-4 border-[#2a0069] p-4">
+        <h1 className="text-4xl text-[#2a0069] font-bold">Notes</h1>
+        <button className="font-bold text-4xl text-[#2a0069]" onClick={addAndNavigateToTask}>
           <BsPlusLg />
         </button>
       </div>
@@ -46,12 +46,12 @@ function Sidebar(props) {
                 onClick={() => {
                   navigate(`/${element.id}`);
                 }}
-                className={`h-20 ${element.id == id?("bg-slate-900 text-slate-300 border-2"):("bg-slate-300 text-slate-900")} cursor-pointer font-bold p-4 flex flex-col `}
+                className={`h-20 ${element.id == id?("bg-[#9687a3] text-[#2a0069]"):("bg-slate-300 text-slate-900")} cursor-pointer font-bold p-4 flex flex-col border-b-4 border-[#2a0069]`}
                 key={element.id}
               >
                 <div>{element.title}</div>
 
-                <div className="font-semi w-full overflow-hidden cursor-pointer text-slate-300">
+                <div className="font-semi w-full overflow-hidden cursor-pointer">
                   <div
                     className="content"
                     dangerouslySetInnerHTML={{ __html: element.description }}
@@ -62,7 +62,7 @@ function Sidebar(props) {
           })}
         </div>
       ) : (
-        <div>Add Tasks</div>
+        <div className="text-center m-10 text-2xl text-bold font-bold">Add Tasks</div>
       )}
     </div>
   );

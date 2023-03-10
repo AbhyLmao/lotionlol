@@ -9,6 +9,7 @@ function Show(props) {
   const [loading, setLoading] = useState(true);
   const [taskTitle, setTaskTitle] = useState("");
   const [desc, setDesc] = useState("");
+  const [date, setDate] = useState("");
   //
   //
   const { id } = useParams();
@@ -22,9 +23,10 @@ function Show(props) {
     if (target != undefined) {
       setTaskTitle(target.title);
       setDesc(target.description);
+      setDate(target.createdat);
       setLoading(false);
     }
-  }, [taskTitle, desc, loading, props.tasks, id]);
+  }, [taskTitle, desc, date,loading, props.tasks, id]);
   function DeleteTask() {
     props.changeTask(props.tasks.filter((task) => task.id != id));
     localStorage.setItem(
@@ -35,7 +37,7 @@ function Show(props) {
   }
 
   return (
-    <div className="flex w-screen">
+    <div className="flex w-[100%]">
       {props.sidebar && (
         <Sidebar
           tasks={props.tasks}
@@ -45,27 +47,31 @@ function Show(props) {
         />
       )}
       <div className="w-[100%]">
-        <div className="flex justify-between">
+        <div className="flex justify-between p-5 border-b-4 border-[#2a0069]">
           <div>
             <div className="flex-col">
-              <div className="font-bold">
+              <div className="font-bold text-[#2a0069] text-4xl">
                 <div
-                  className="content"
+                  className="content" 
                   dangerouslySetInnerHTML={{
                     __html: taskTitle,
                   }}
                 ></div>
               </div>
-              <div>date</div>
+              <div className="text-[#2a0069] text-2xl" SetInnerHTML={{
+                    __html: date,
+                  }}>yyyy-mm-d</div>
             </div>
           </div>
-          <div className="flex gap-10">
-            <button onClick={() => navigate("edit")}>Edit</button>
-            <button onClick={DeleteTask}>delete</button>
+          <div className="flex gap-5">
+            <button className= "text-2xl font-bold rounded-full bg-[#8d73b3] pl-7 pr-7" onClick={() => navigate("edit")}>Edit</button>
+            <button className= "text-2xl font-bold rounded-full bg-[#8d73b3] pl-7 pr-7" onClick={DeleteTask}>Delete</button>
           </div>
         </div>
         <div
-          className="content"
+          class="content"
+          className=" p-10 text-[23px] break-all
+          "
           dangerouslySetInnerHTML={{ __html: desc }}
         ></div>
       </div>

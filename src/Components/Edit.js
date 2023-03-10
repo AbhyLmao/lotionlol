@@ -10,6 +10,8 @@ function Edit(props) {
   const [value, setValue] = useState("");
   const { id } = useParams();
   const [title, setTitle] = useState("");
+
+  const [date, setDate] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     if (props.tasks.find((element) => element.id === id)) {
@@ -19,6 +21,15 @@ function Edit(props) {
     } else {
     }
   }, [props, id]);
+
+  const formatDate = (tday) => {
+    const formatted = new Date(tday).toLocaleString("en-US");
+    if (formatted === "Invalid Date") {
+        return "";
+    }
+    return formatted;
+  };
+  const date2 = formatDate(date);
 
   useEffect(() => {
     console.log("element use effect props");
@@ -30,6 +41,9 @@ function Edit(props) {
       props.tasks.find((element) => {
         return element.id === id ? setValue(element.description) : setValue("");
       });
+      props.tasks.find((element) => {
+        return element.id === id ? setValue(element.createdat) : setValue("");
+      });
     } else {
     }
   }, [props.tasks, id]);
@@ -39,6 +53,7 @@ function Edit(props) {
     if (targetElement !== undefined) {
       targetElement.title = title;
       targetElement.description = value;
+      targetElement.createdat = date2;
       localStorage.setItem("test", JSON.stringify(props.tasks));
       navigate(`/${id}`);
     }
@@ -61,24 +76,26 @@ function Edit(props) {
           changeTitle={props.changeTitle}
         />
       )}
-      <div className="">
-        <div className="flex justify-between">
+      <div className="w-[100%]">
+        <div className="flex justify-between p-5">
           <div className="flex-col">
             <input
+              className="font-bold text-[#2a0069] text-4xl bg-[#eae0fa]"
               type="text"
-              placeholder="Untled"
+              placeholder="Untitled"
               value={title}
               ref={titleElement}
               onChange={(e) => setTitle(e.target.value)}
             />
-            <div>date</div>
+            <div><input className="text-2xl bg-[#eae0fa]" type="datetime-local" id='date-time-input' onChange={(e) => setDate(e.target.value)} value={date} /></div>
           </div>
-          <div className="flex gap-10">
-            <button onClick={addTask}>save</button>
-            <button onClick={DeleteTask}>delete</button>
+          <div className="flex gap-5">
+            <button className= "text-2xl font-bold rounded-full bg-[#8d73b3] pl-7 pr-7" onClick={addTask}>Save</button>
+            <button className= "text-2xl font-bold rounded-full bg-[#8d73b3] pl-7 pr-7" onClick={DeleteTask}>Delete</button>
           </div>
-        </div>
-        <ReactQuill
+        </div >
+        <ReactQuill 
+          className="pl-5 pr-5"
           style={{ height: "96%" }}
           theme="snow"
           value={value}

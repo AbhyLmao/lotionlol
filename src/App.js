@@ -6,7 +6,6 @@ import Edit from "./Components/Edit";
 import Show from "./Components/Show";
 
 function App() {
-  const [count, setCount] = useState(0);
   const [sidebar, isSidebar] = useState(false);
   const [notes, changeNotes] = useState([]);
   const [targetTitle, setTargetTitle] = useState("");
@@ -53,11 +52,11 @@ function App() {
                         changeTitle={setTargetTitle}
                         changeTask={changeNotes}
                       />
-                      <div className="grid absolute w-screen top-0 z-[-100] h-screen place-items-center text-4xl text-slate-900 font-bold">
-                        Add a Task
-                      </div>
                     </div>
                   )}
+                  <div className="grid fixed w-screen top-0 z-[-100] h-screen place-items-center text-4xl text-slate-900 font-bold">
+                    Add a Task
+                  </div>
                 </div>
               }
             />
@@ -65,6 +64,8 @@ function App() {
               path={`/:id/edit`}
               element={
                 <Edit
+                  sidebar={sidebar}
+                  isSidebar={isSidebar}
                   tasks={notes}
                   changeTitle={setTargetTitle}
                   changeTask={changeNotes}
@@ -76,6 +77,8 @@ function App() {
               path={`/:id`}
               element={
                 <Show
+                  sidebar={sidebar}
+                  isSidebar={isSidebar}
                   tasks={notes}
                   targetTitle={targetTitle}
                   setTargetTitle={setTargetTitle}

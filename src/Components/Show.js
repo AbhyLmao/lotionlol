@@ -11,7 +11,6 @@ function Show(props) {
   const [desc, setDesc] = useState("");
   //
   //
-  console.log(props, "Properties of n");
   const { id } = useParams();
 
   useEffect(() => {
@@ -20,7 +19,6 @@ function Show(props) {
   }, []);
   useEffect(() => {
     var target = props.tasks.find((task) => task.id == id);
-    console.log({ target });
     if (target != undefined) {
       setTaskTitle(target.title);
       setDesc(target.description);
@@ -36,17 +34,16 @@ function Show(props) {
     navigate("/");
   }
 
-  console.log(props, "Props");
-
   return (
     <div className="flex w-screen">
-      <Sidebar
-        tasks={props.tasks}
-        changeTitle={props.changeTitle}
-        changeDesc={props.targetDesc}
-        changeTask={props.changeTask}
-      />
-
+      {props.sidebar && (
+        <Sidebar
+          tasks={props.tasks}
+          changeTitle={props.changeTitle}
+          changeDesc={props.targetDesc}
+          changeTask={props.changeTask}
+        />
+      )}
       <div className="w-[100%]">
         <div className="flex justify-between">
           <div>

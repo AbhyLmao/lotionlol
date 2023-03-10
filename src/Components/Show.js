@@ -19,8 +19,8 @@ function Show(props) {
     }
   }, []);
   useEffect(() => {
-    var target = props.tasks.find((task) => task.id == id);
-    if (target != undefined) {
+    var target = props.tasks.find((task) => task.id === id);
+    if (target !== undefined) {
       setTaskTitle(target.title);
       setDesc(target.description);
       setDate(target.createdat);
@@ -28,10 +28,10 @@ function Show(props) {
     }
   }, [taskTitle, desc, date,loading, props.tasks, id]);
   function DeleteTask() {
-    props.changeTask(props.tasks.filter((task) => task.id != id));
+    props.changeTask(props.tasks.filter((task) => task.id !== id));
     localStorage.setItem(
       "test",
-      JSON.stringify(props.tasks.filter((task) => task.id != id))
+      JSON.stringify(props.tasks.filter((task) => task.id !== id))
     );
     navigate("/");
   }
@@ -58,9 +58,7 @@ function Show(props) {
                   }}
                 ></div>
               </div>
-              <div className="text-[#2a0069] text-2xl" SetInnerHTML={{
-                    __html: date,
-                  }}>yyyy-mm-d</div>
+              <div className="text-[#2a0069] text-2xl">yyyy-mm-dd</div>
             </div>
           </div>
           <div className="flex gap-5">

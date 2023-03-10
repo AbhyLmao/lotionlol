@@ -11,7 +11,7 @@ function Edit(props) {
   const { id } = useParams();
   const [title, setTitle] = useState("");
 
-  const [date, setDate] = useState("");
+  
   const navigate = useNavigate();
   useEffect(() => {
     if (props.tasks.find((element) => element.id === id)) {
@@ -22,14 +22,7 @@ function Edit(props) {
     }
   }, [props, id]);
 
-  const formatDate = (tday) => {
-    const formatted = new Date(tday).toLocaleString("en-US");
-    if (formatted === "Invalid Date") {
-        return "";
-    }
-    return formatted;
-  };
-  const date2 = formatDate(date);
+  
 
   useEffect(() => {
     console.log("element use effect props");
@@ -41,9 +34,6 @@ function Edit(props) {
       props.tasks.find((element) => {
         return element.id === id ? setValue(element.description) : setValue("");
       });
-      props.tasks.find((element) => {
-        return element.id === id ? setValue(element.createdat) : setValue("");
-      });
     } else {
     }
   }, [props.tasks, id]);
@@ -53,16 +43,16 @@ function Edit(props) {
     if (targetElement !== undefined) {
       targetElement.title = title;
       targetElement.description = value;
-      targetElement.createdat = date2;
+      
       localStorage.setItem("test", JSON.stringify(props.tasks));
       navigate(`/${id}`);
     }
   }
   function DeleteTask() {
-    props.changeTask(props.tasks.filter((task) => task.id != id));
+    props.changeTask(props.tasks.filter((task) => task.id !== id));
     localStorage.setItem(
       "test",
-      JSON.stringify(props.tasks.filter((task) => task.id != id))
+      JSON.stringify(props.tasks.filter((task) => task.id !== id))
     );
     navigate("/");
   }
@@ -87,7 +77,7 @@ function Edit(props) {
               ref={titleElement}
               onChange={(e) => setTitle(e.target.value)}
             />
-            <div><input className="text-2xl bg-[#eae0fa]" type="datetime-local" id='date-time-input' onChange={(e) => setDate(e.target.value)} value={date} /></div>
+            <div><input className="text-2xl bg-[#eae0fa]" type="datetime-local" id='date-time-input'/></div>
           </div>
           <div className="flex gap-5">
             <button className= "text-2xl font-bold rounded-full bg-[#8d73b3] pl-7 pr-7" onClick={addTask}>Save</button>

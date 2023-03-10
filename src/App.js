@@ -18,7 +18,7 @@ function App() {
         "WXYZ"
       );
       changeNotes(JSON.parse(localStorage.getItem("test")));
-      console.log({ notes });
+      
     }
   }, []);
 

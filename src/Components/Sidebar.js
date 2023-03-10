@@ -46,7 +46,7 @@ function Sidebar(props) {
                 onClick={() => {
                   navigate(`/${element.id}`);
                 }}
-                className={`h-20 ${element.id == id?("bg-[#9687a3] text-[#2a0069]"):("bg-slate-300 text-slate-900")} cursor-pointer font-bold p-4 flex flex-col border-b-4 border-[#2a0069]`}
+                className={`h-20 ${element.id === id?("bg-[#9687a3] text-[#2a0069]"):("bg-slate-300 text-slate-900")} cursor-pointer font-bold p-4 flex flex-col border-b-4 border-[#2a0069]`}
                 key={element.id}
               >
                 <div>{element.title}</div>
